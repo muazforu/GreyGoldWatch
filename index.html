@@ -448,7 +448,10 @@ $$('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%3)*.08+'s';io.observe
 /* order form */
 let q=1;const upd=()=>{$('#q').textContent=q;$('#tot').textContent='Rs. '+(q*1199).toLocaleString()};
 $('#plus').onclick=()=>{q=Math.min(10,q+1);upd()};$('#minus').onclick=()=>{q=Math.max(1,q-1);upd()};
-$('#form').onsubmit=e=>{e.preventDefault();const d=new FormData(e.target);const t=$('#toast');t.textContent=`Thank you, ${d.get('name')}! Your order for ${q} watch${q>1?'es':''} (Rs. ${(q*1199).toLocaleString()}) is confirmed. We'll call ${d.get('phone')} to confirm delivery to ${d.get('city')}.`;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),6000);e.target.reset();q=1;upd()};
+const SHEET_WEBHOOK_URL=''; /* Google Apps Script web app URL — paste after deploying (see google-apps-script.js) */
+$('#form').onsubmit=async e=>{e.preventDefault();const d=new FormData(e.target);const order={name:d.get('name'),phone:d.get('phone'),city:d.get('city'),quantity:q,address:d.get('address'),total:q*1199};
+if(SHEET_WEBHOOK_URL){try{await fetch(SHEET_WEBHOOK_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify(order)});}catch(err){}}
+const t=$('#toast');t.textContent=`Thank you, ${d.get('name')}! Your order for ${q} watch${q>1?'es':''} (Rs. ${(q*1199).toLocaleString()}) is confirmed. We'll call ${d.get('phone')} to confirm delivery to ${d.get('city')}.`;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),6000);e.target.reset();q=1;upd()};
 </script>
 
 <a href="https://techinfotics.online" target="_blank" rel="noopener" id="techinfotics-badge" title="Crafted by Techinfotics">Crafted by <b>Techinfotics</b></a>
