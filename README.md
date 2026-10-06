@@ -1,12 +1,13 @@
 <div align="center">
 
-# ⌚ Rilax
+# ⌚ GREY·GOLD
 
 ### *Interactive 3D product website — by Techinfotics*
 
-**Rilax** — grey silicone watch with gold dial. Rs. 1,199 · Free home delivery across Pakistan · Cash on delivery.
+**GREY·GOLD Watches · Pakistan** — grey silicone watch with gold dial.
+Rs. 1,199 · Free home delivery across Pakistan · Cash on delivery.
 
-**[🌐 View live site](https://muazforu.github.io/RilaxWatch/)**
+**[🌐 View live site](https://muazforu.github.io/GreyGoldWatch/)**
 
 </div>
 
