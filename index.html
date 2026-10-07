@@ -448,7 +448,11 @@ $$('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%3)*.08+'s';io.observe
 /* order form */
 let q=1;const upd=()=>{$('#q').textContent=q;$('#tot').textContent='Rs. '+(q*1199).toLocaleString()};
 $('#plus').onclick=()=>{q=Math.min(10,q+1);upd()};$('#minus').onclick=()=>{q=Math.max(1,q-1);upd()};
-$('#form').onsubmit=e=>{e.preventDefault();const d=new FormData(e.target);const t=$('#toast');t.textContent=`Thank you, ${d.get('name')}! Your order for ${q} watch${q>1?'es':''} (Rs. ${(q*1199).toLocaleString()}) is confirmed. We'll call ${d.get('phone')} to confirm delivery to ${d.get('city')}.`;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),6000);e.target.reset();q=1;upd()};
+const ORDER_FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSeP-0PxSDRsBwO2O-JIaIn8zLG8sYi6Zl1SB_NEyxezITJQBw/formResponse';
+const ORDER_FIELDS={name:'entry.442124077',phone:'entry.763701892',city:'entry.528656334',quantity:'entry.985173840',address:'entry.1211382768',total:'entry.720967183'};
+$('#form').onsubmit=e=>{e.preventDefault();const d=new FormData(e.target);
+try{const p=new URLSearchParams();p.set(ORDER_FIELDS.name,d.get('name'));p.set(ORDER_FIELDS.phone,d.get('phone'));p.set(ORDER_FIELDS.city,d.get('city'));p.set(ORDER_FIELDS.quantity,String(q));p.set(ORDER_FIELDS.address,d.get('address'));p.set(ORDER_FIELDS.total,String(q*1199));p.set('fvv','1');p.set('pageHistory','0');fetch(ORDER_FORM_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:p.toString()});}catch(err){}
+const t=$('#toast');t.textContent=`Thank you, ${d.get('name')}! Your order for ${q} watch${q>1?'es':''} (Rs. ${(q*1199).toLocaleString()}) is confirmed. We'll call ${d.get('phone')} to confirm delivery to ${d.get('city')}.`;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),6000);e.target.reset();q=1;upd()};
 </script>
 
 <a href="https://techinfotics.online" target="_blank" rel="noopener" id="techinfotics-badge" title="Crafted by Techinfotics">Crafted by <b>Techinfotics</b></a>
